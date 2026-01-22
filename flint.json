@@ -1,0 +1,10 @@
+{
+    "host": "http://localhost:8000",
+    "static": "./static",
+    "favicon": "./favicon.ico",
+    "out": "./out",
+    "target": "https://phillip-england.github.io/www.stacijs.com",
+    "routes": [
+        "/"
+    ]
+}

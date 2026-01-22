@@ -1,0 +1,406 @@
+<!doctype html><html lang=en><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Drake's Detail Supply | Tulsa, Oklahoma</title><script src=https://cdn.tailwindcss.com></script><script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a5f',
+                        secondary: '#c9a227',
+                    }
+                }
+            }
+        }
+    </script><style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out, background-color 0s, color 0s, border-color 0s, box-shadow 0s;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-in-delay-1 { transition-delay: 0.15s, 0.15s, 0s, 0s, 0s, 0s; }
+        .fade-in-delay-2 { transition-delay: 0.3s, 0.3s, 0s, 0s, 0s, 0s; }
+        .fade-in-delay-3 { transition-delay: 0.45s, 0.45s, 0s, 0s, 0s, 0s; }
+
+        @keyframes heroZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        @keyframes heroReveal {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes floatSoft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 8px 22px -18px rgba(201, 162, 39, 0.15); transform: translateY(0); }
+            50% { box-shadow: 0 12px 28px -18px rgba(201, 162, 39, 0.4); transform: translateY(-1px); }
+        }
+        @keyframes dotsDrift {
+            0% { background-position: 0 0; opacity: 0.6; }
+            50% { background-position: 12px 0; opacity: 1; }
+            100% { background-position: 24px 0; opacity: 0.6; }
+        }
+
+        .hero-image {
+            animation: heroZoom 18s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+        .hero-title {
+            animation: heroReveal 0.9s ease forwards;
+        }
+        .hero-subtitle {
+            opacity: 0;
+            animation: heroReveal 0.9s ease 0.2s forwards;
+        }
+        .hero-cta {
+            opacity: 0;
+            animation: heroReveal 0.9s ease 0.35s forwards;
+        }
+        .float-soft {
+            animation: floatSoft 6s ease-in-out infinite;
+        }
+        .float-delay-1 { animation-delay: 0.4s; }
+        .float-delay-2 { animation-delay: 0.8s; }
+        .float-delay-3 { animation-delay: 1.2s; }
+        .cta-pulse {
+            animation: ctaPulse 5s ease-in-out infinite;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            height: 6px;
+            width: 48px;
+            background-image: radial-gradient(circle, #c9a227 0 2px, transparent 2px);
+            background-size: 12px 6px;
+            background-repeat: repeat-x;
+            animation: dotsDrift 6s ease-in-out infinite;
+        }
+        .hover-lift {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-6px);
+        }
+
+         
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #c9a227, #f0d060);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .navbar {
+            background: transparent;
+            backdrop-filter: blur(0px);
+            transition: all 0.4s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(30, 58, 95, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .dark .navbar.scrolled {
+            background: rgba(17, 24, 39, 0.95);
+        }
+        .logo {
+            background: linear-gradient(135deg, #ffffff, #c9a227);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+         
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1e3a5f 0%, #0f1f33 100%);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-menu-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .mobile-nav-link {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease;
+        }
+        .mobile-menu-overlay.active .mobile-nav-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-nav-link:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-nav-link:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-nav-link:hover {
+            color: #c9a227;
+        }
+
+         
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            z-index: 150;
+        }
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+        .hamburger span:nth-child(3) { bottom: 0; }
+        .hamburger.active span:nth-child(1) {
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        .hamburger.active span:nth-child(3) {
+            bottom: 50%;
+            transform: translateY(50%) rotate(-45deg);
+        }
+
+         
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0;
+            transform: rotate(-90deg);
+            transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
+        }
+        .mobile-menu-overlay.active .close-btn {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+        .close-btn::before,
+        .close-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+        }
+        .close-btn::before { transform: translate(-50%, -50%) rotate(45deg); }
+        .close-btn::after { transform: translate(-50%, -50%) rotate(-45deg); }
+        .close-btn:hover::before,
+        .close-btn:hover::after {
+            background: #c9a227;
+        }
+
+         
+        .theme-toggle {
+            width: 56px;
+            height: 28px;
+            background: linear-gradient(135deg, #87CEEB, #FFD700);
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.4s ease;
+            border: none;
+            padding: 0;
+        }
+        .dark .theme-toggle {
+            background: linear-gradient(135deg, #1a1a2e, #4a4a6a);
+        }
+        .theme-toggle-circle {
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.4s ease, background 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark .theme-toggle-circle {
+            transform: translateX(28px);
+            background: #1a1a2e;
+        }
+        .theme-toggle-circle svg {
+            width: 14px;
+            height: 14px;
+            transition: opacity 0.3s ease;
+        }
+        .sun-icon { color: #FFD700; }
+        .moon-icon { color: #fff; opacity: 0; position: absolute; }
+        .dark .sun-icon { opacity: 0; }
+        .dark .moon-icon { opacity: 1; }
+
+         
+        .dark .fade-in,
+        .fade-in.dark {
+            transition: opacity 1s ease-out, transform 1s ease-out, background-color 0s, color 0s, border-color 0s, box-shadow 0s;
+        }
+        .dark .fade-in.visible,
+        .fade-in.dark.visible {
+            transition: opacity 1s ease-out, transform 1s ease-out, background-color 0s, color 0s, border-color 0s, box-shadow 0s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-image,
+            .hero-title,
+            .hero-subtitle,
+            .hero-cta,
+            .float-soft,
+            .cta-pulse,
+            .section-title::after {
+                animation: none !important;
+                transform: none !important;
+            }
+        }
+    </style><body class="bg-gray-50 dark:bg-gray-900"><nav id=navbar class="navbar text-white py-5 fixed w-full top-0 z-50"><div class="max-w-7xl mx-auto px-6 flex justify-between items-center"><a href=https://phillip-england.github.io/www.stacijs.com/index.html class="logo text-2xl font-bold tracking-wide">Drake's Detail Supply</a><ul class="hidden md:flex space-x-10 items-center"><li><a href=#home class="nav-link text-white font-medium tracking-wide">Home</a><li><a href=#services class="nav-link text-white font-medium tracking-wide">Services</a><li><a href=#contact class="nav-link text-white font-medium tracking-wide">Contact</a><li><button id=theme-toggle class=theme-toggle aria-label="Toggle dark mode"><div class=theme-toggle-circle><svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                            </svg>
+<svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                            </svg></div></button></ul><div class="md:hidden flex items-center gap-4"><button id=theme-toggle-mobile class=theme-toggle aria-label="Toggle dark mode"><div class=theme-toggle-circle><svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+<svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg></div></button>
+<button id=mobile-menu-btn class=hamburger aria-label="Toggle menu">
+<span></span>
+<span></span>
+<span></span></button></div></div></nav><div id=mobile-menu class="mobile-menu-overlay md:hidden"><div id=close-menu class=close-btn></div><div class=mobile-menu-content><a href=#home class="mobile-nav-link mb-8">Home</a>
+<a href=#services class="mobile-nav-link mb-8">Services</a>
+<a href=#contact class=mobile-nav-link>Contact</a></div></div><section id=home class="relative h-screen flex items-center justify-center"><div class="absolute inset-0"><img src=https://phillip-england.github.io/www.stacijs.com/static/hero.webp alt="Auto Detailing" class="hero-image w-full h-full object-cover"><div class="absolute inset-0 bg-black bg-opacity-65"></div></div><div class="relative z-10 text-center text-white px-4"><h1 class="hero-title text-5xl md:text-7xl font-bold mb-4">Drake's Detail Supply</h1><p class="hero-subtitle text-xl md:text-2xl mb-8">Premium Auto Detailing Products in Tulsa, Oklahoma</p><a href="https://www.facebook.com/profile.php?id=61582551050589" class="hero-cta cta-pulse bg-secondary hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition" target=_blank rel="noopener noreferrer">Message Us on Facebook</a></div></section><section id=services class="py-20 bg-white dark:bg-gray-800"><div class="max-w-7xl mx-auto px-4"><h2 class="fade-in section-title text-4xl font-bold text-center text-primary dark:text-white mb-4">Our Services</h2><p class="fade-in text-gray-600 dark:text-gray-300 text-center mb-12 max-w-2xl mx-auto">We provide top-quality auto detailing supplies and expert advice to keep your vehicle looking its best.<div class="grid md:grid-cols-3 gap-8"><div class="fade-in fade-in-delay-1 hover-lift bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow"><div class="float-soft float-delay-1 w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                        </svg></div><h3 class="text-xl font-bold text-primary dark:text-white mb-3">Premium Products</h3><p class="text-gray-600 dark:text-gray-300">Professional-grade waxes, polishes, and coatings from the industry's top brands.</div><div class="fade-in fade-in-delay-2 hover-lift bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow"><div class="float-soft float-delay-2 w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg></div><h3 class="text-xl font-bold text-primary dark:text-white mb-3">Expert Advice</h3><p class="text-gray-600 dark:text-gray-300">Years of detailing experience to help you choose the right products for your needs.</div><div class="fade-in fade-in-delay-3 hover-lift bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow"><div class="float-soft float-delay-3 w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4"><svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg></div><h3 class="text-xl font-bold text-primary dark:text-white mb-3">Local Service</h3><p class="text-gray-600 dark:text-gray-300">Proudly serving Tulsa and the surrounding Oklahoma area with personalized service.</div></div></div></section><section id=contact class="py-20 bg-gray-100 dark:bg-gray-900"><div class="max-w-3xl mx-auto px-4"><h2 class="fade-in section-title text-4xl font-bold text-center text-primary dark:text-white mb-4">Contact Us</h2><p class="fade-in text-gray-600 dark:text-gray-300 text-center mb-12">Message us on Facebook for questions, product availability, or local pickup details.<div class="fade-in hover-lift bg-white dark:bg-gray-800 rounded-lg shadow-lg p-10 text-center"><a href="https://www.facebook.com/profile.php?id=61582551050589" class="float-soft w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md hover:shadow-lg transition" target=_blank rel="noopener noreferrer" aria-label="Visit Drake's Detail Supply on Facebook"><svg class="w-10 h-10 text-white" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.2 10.44 22v-7.03H7.9v-2.91h2.54V9.84c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.77l-.44 2.91h-2.33V22C18.34 21.2 22 17.08 22 12.06z"></path>
+                    </svg></a><p class="text-gray-600 dark:text-gray-300 mb-2">We respond quickly on Facebook during business hours.<p class="text-gray-600 dark:text-gray-300 mb-6">Email: <a href=mailto:lukedrake.dds@gmail.com class="text-primary dark:text-secondary font-semibold hover:underline">lukedrake.dds@gmail.com</a><p class="text-gray-600 dark:text-gray-300 mb-6">5430 S 99th E Ave, Tulsa, OK 74145</p><a href="https://www.facebook.com/profile.php?id=61582551050589" class="inline-flex items-center justify-center bg-primary hover:bg-blue-900 dark:bg-secondary dark:hover:bg-yellow-600 text-white dark:text-gray-900 font-bold py-3 px-8 rounded-lg transition" target=_blank rel="noopener noreferrer">Message Us on Facebook</a></div></div></section><footer class="bg-primary dark:bg-gray-950 text-white py-8"><div class="max-w-7xl mx-auto px-4 text-center"><p class="text-xl font-bold mb-2">Drake's Detail Supply<p class="text-gray-300 mb-4">Tulsa, Oklahoma<p class="text-gray-400 text-sm">© 2025 Drake's Detail Supply. All rights reserved.</div></footer><script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileMenuBtn.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+
+        
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const html = document.documentElement;
+
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+
+    </script>
