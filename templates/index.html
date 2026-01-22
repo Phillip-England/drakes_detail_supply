@@ -32,26 +32,73 @@
         .fade-in-delay-2 { transition-delay: 0.3s, 0.3s, 0s, 0s, 0s, 0s; }
         .fade-in-delay-3 { transition-delay: 0.45s, 0.45s, 0s, 0s, 0s, 0s; }
 
-        /* Form validation styles */
-        .form-input.error {
-            border-color: #ef4444 !important;
-            background-color: #fef2f2;
+        @keyframes heroZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
         }
-        .dark .form-input.error {
-            border-color: #f87171 !important;
-            background-color: rgba(127, 29, 29, 0.2);
+        @keyframes heroReveal {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
-        .form-input.success {
-            border-color: #22c55e !important;
+        @keyframes floatSoft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
         }
-        .dark .form-input.success {
-            border-color: #4ade80 !important;
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 8px 22px -18px rgba(201, 162, 39, 0.15); transform: translateY(0); }
+            50% { box-shadow: 0 12px 28px -18px rgba(201, 162, 39, 0.4); transform: translateY(-1px); }
         }
-        .char-warning {
-            color: #f59e0b !important;
+        @keyframes dotsDrift {
+            0% { background-position: 0 0; opacity: 0.6; }
+            50% { background-position: 12px 0; opacity: 1; }
+            100% { background-position: 24px 0; opacity: 0.6; }
         }
-        .char-limit {
-            color: #ef4444 !important;
+
+        .hero-image {
+            animation: heroZoom 18s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+        .hero-title {
+            animation: heroReveal 0.9s ease forwards;
+        }
+        .hero-subtitle {
+            opacity: 0;
+            animation: heroReveal 0.9s ease 0.2s forwards;
+        }
+        .hero-cta {
+            opacity: 0;
+            animation: heroReveal 0.9s ease 0.35s forwards;
+        }
+        .float-soft {
+            animation: floatSoft 6s ease-in-out infinite;
+        }
+        .float-delay-1 { animation-delay: 0.4s; }
+        .float-delay-2 { animation-delay: 0.8s; }
+        .float-delay-3 { animation-delay: 1.2s; }
+        .cta-pulse {
+            animation: ctaPulse 5s ease-in-out infinite;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            height: 6px;
+            width: 48px;
+            background-image: radial-gradient(circle, #c9a227 0 2px, transparent 2px);
+            background-size: 12px 6px;
+            background-repeat: repeat-x;
+            animation: dotsDrift 6s ease-in-out infinite;
+        }
+        .hover-lift {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-6px);
         }
 
         /* Navigation styles */
@@ -251,6 +298,18 @@
             transition: opacity 1s ease-out, transform 1s ease-out, background-color 0s, color 0s, border-color 0s, box-shadow 0s;
         }
 
+        @media (prefers-reduced-motion: reduce) {
+            .hero-image,
+            .hero-title,
+            .hero-subtitle,
+            .hero-cta,
+            .float-soft,
+            .cta-pulse,
+            .section-title::after {
+                animation: none !important;
+                transform: none !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900">
@@ -307,26 +366,26 @@
     <!-- Hero Section -->
     <section id="home" class="relative h-screen flex items-center justify-center">
         <div class="absolute inset-0">
-            <img src="/static/hero.webp" alt="Auto Detailing" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+            <img src="/static/hero.webp" alt="Auto Detailing" class="hero-image w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-65"></div>
         </div>
         <div class="relative z-10 text-center text-white px-4">
-            <h1 class="text-5xl md:text-7xl font-bold mb-4">Drake's Detail Supply</h1>
-            <p class="text-xl md:text-2xl mb-8">Premium Auto Detailing Products in Tulsa, Oklahoma</p>
-            <a href="#contact" class="bg-secondary hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition">Get In Touch</a>
+            <h1 class="hero-title text-5xl md:text-7xl font-bold mb-4">Drake's Detail Supply</h1>
+            <p class="hero-subtitle text-xl md:text-2xl mb-8">Premium Auto Detailing Products in Tulsa, Oklahoma</p>
+            <a href="https://www.facebook.com/profile.php?id=61582551050589" class="hero-cta cta-pulse bg-secondary hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition" target="_blank" rel="noopener noreferrer">Message Us on Facebook</a>
         </div>
     </section>
 
     <!-- Services Section -->
     <section id="services" class="py-20 bg-white dark:bg-gray-800">
         <div class="max-w-7xl mx-auto px-4">
-            <h2 class="fade-in text-4xl font-bold text-center text-primary dark:text-white mb-4">Our Services</h2>
+            <h2 class="fade-in section-title text-4xl font-bold text-center text-primary dark:text-white mb-4">Our Services</h2>
             <p class="fade-in text-gray-600 dark:text-gray-300 text-center mb-12 max-w-2xl mx-auto">We provide top-quality auto detailing supplies and expert advice to keep your vehicle looking its best.</p>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Service 1 -->
-                <div class="fade-in fade-in-delay-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
-                    <div class="w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                <div class="fade-in fade-in-delay-1 hover-lift bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
+                    <div class="float-soft float-delay-1 w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                         </svg>
@@ -336,8 +395,8 @@
                 </div>
 
                 <!-- Service 2 -->
-                <div class="fade-in fade-in-delay-2 bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
-                    <div class="w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                <div class="fade-in fade-in-delay-2 hover-lift bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
+                    <div class="float-soft float-delay-2 w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                         </svg>
@@ -347,8 +406,8 @@
                 </div>
 
                 <!-- Service 3 -->
-                <div class="fade-in fade-in-delay-3 bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
-                    <div class="w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                <div class="fade-in fade-in-delay-3 hover-lift bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
+                    <div class="float-soft float-delay-3 w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
                         <svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
@@ -364,78 +423,25 @@
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gray-100 dark:bg-gray-900">
         <div class="max-w-3xl mx-auto px-4">
-            <h2 class="fade-in text-4xl font-bold text-center text-primary dark:text-white mb-4">Contact Us</h2>
-            <p class="fade-in text-gray-600 dark:text-gray-300 text-center mb-12">Have questions? We'd love to hear from you. Send us a message!</p>
+            <h2 class="fade-in section-title text-4xl font-bold text-center text-primary dark:text-white mb-4">Contact Us</h2>
+            <p class="fade-in text-gray-600 dark:text-gray-300 text-center mb-12">Message us on Facebook for questions, product availability, or local pickup details.</p>
 
-            <form id="contact-form" class="fade-in bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8" novalidate>
-                <!-- Form Error Summary -->
-                <div id="form-error-summary" class="hidden bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
-                    <p class="font-medium">Please fix the following errors:</p>
-                    <ul id="error-list" class="list-disc list-inside mt-2 text-sm"></ul>
+            <div class="fade-in hover-lift bg-white dark:bg-gray-800 rounded-lg shadow-lg p-10 text-center">
+                <div class="float-soft w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                    <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor" d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.2 10.44 22v-7.03H7.9v-2.91h2.54V9.84c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.77l-.44 2.91h-2.33V22C18.34 21.2 22 17.08 22 12.06z"></path>
+                    </svg>
                 </div>
-
-                <!-- Success Message -->
-                <div id="form-success" class="hidden bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg mb-6">
-                    <p class="font-medium">Thank you for your message! We'll get back to you soon.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <!-- Name Field -->
-                    <div>
-                        <label for="name" class="block text-gray-700 dark:text-gray-200 font-medium mb-2">
-                            Name <span id="name-required" class="hidden text-red-500">*</span>
-                        </label>
-                        <input type="text" id="name" name="name"
-                            class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
-                            placeholder="Your name">
-                        <p id="name-error" class="hidden text-red-500 dark:text-red-400 text-sm mt-1"></p>
-                    </div>
-
-                    <!-- Email Field -->
-                    <div>
-                        <label for="email" class="block text-gray-700 dark:text-gray-200 font-medium mb-2">
-                            Email <span id="contact-required" class="hidden text-red-500">*</span>
-                        </label>
-                        <input type="email" id="email" name="email"
-                            class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
-                            placeholder="your@email.com">
-                        <p id="email-error" class="hidden text-red-500 dark:text-red-400 text-sm mt-1"></p>
-                    </div>
-                </div>
-
-                <!-- Phone Field -->
-                <div class="mb-6">
-                    <label for="phone" class="block text-gray-700 dark:text-gray-200 font-medium mb-2">
-                        Phone <span id="phone-required" class="hidden text-red-500">*</span>
-                    </label>
-                    <input type="tel" id="phone" name="phone"
-                        class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
-                        placeholder="(555) 123-4567">
-                    <p id="phone-error" class="hidden text-red-500 dark:text-red-400 text-sm mt-1"></p>
-                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Provide either email or phone (or both)</p>
-                </div>
-
-                <!-- Message Field -->
-                <div class="mb-6">
-                    <label for="message" class="block text-gray-700 dark:text-gray-200 font-medium mb-2">
-                        Message <span id="message-required" class="hidden text-red-500">*</span>
-                    </label>
-                    <textarea id="message" name="message" rows="5" maxlength="256"
-                        class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
-                        placeholder="How can we help you?"></textarea>
-                    <div class="flex justify-between items-center mt-1">
-                        <p id="message-error" class="hidden text-red-500 dark:text-red-400 text-sm"></p>
-                        <p id="char-counter" class="text-gray-500 dark:text-gray-400 text-sm ml-auto">
-                            <span id="char-count">0</span>/256 characters
-                        </p>
-                    </div>
-                </div>
-
-                <button type="submit" id="submit-btn"
-                    class="w-full bg-primary hover:bg-blue-900 dark:bg-secondary dark:hover:bg-yellow-600 text-white dark:text-gray-900 font-bold py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
-                    Send Message
-                </button>
-            </form>
+                <p class="text-gray-600 dark:text-gray-300 mb-2">We respond quickly on Facebook during business hours.</p>
+                <p class="text-gray-600 dark:text-gray-300 mb-6">
+                    Email: <a href="mailto:lukedrake.dds@gmail.com" class="text-primary dark:text-secondary font-semibold hover:underline">lukedrake.dds@gmail.com</a>
+                </p>
+                <a href="https://www.facebook.com/profile.php?id=61582551050589"
+                    class="inline-flex items-center justify-center bg-primary hover:bg-blue-900 dark:bg-secondary dark:hover:bg-yellow-600 text-white dark:text-gray-900 font-bold py-3 px-8 rounded-lg transition"
+                    target="_blank" rel="noopener noreferrer">
+                    Message Us on Facebook
+                </a>
+            </div>
         </div>
     </section>
 
@@ -524,239 +530,6 @@
         themeToggle.addEventListener('click', toggleTheme);
         themeToggleMobile.addEventListener('click', toggleTheme);
 
-        // Contact Form Validation
-        const contactForm = document.getElementById('contact-form');
-        const nameInput = document.getElementById('name');
-        const emailInput = document.getElementById('email');
-        const phoneInput = document.getElementById('phone');
-        const messageInput = document.getElementById('message');
-        const charCount = document.getElementById('char-count');
-        const charCounter = document.getElementById('char-counter');
-        const formErrorSummary = document.getElementById('form-error-summary');
-        const errorList = document.getElementById('error-list');
-        const formSuccess = document.getElementById('form-success');
-
-        // Required indicators (hidden by default)
-        const nameRequired = document.getElementById('name-required');
-        const contactRequired = document.getElementById('contact-required');
-        const phoneRequired = document.getElementById('phone-required');
-        const messageRequired = document.getElementById('message-required');
-
-        // Validation patterns
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phonePattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-
-        // Helper functions
-        function showError(input, errorElement, message) {
-            input.classList.add('error');
-            input.classList.remove('success');
-            errorElement.textContent = message;
-            errorElement.classList.remove('hidden');
-        }
-
-        function showSuccess(input, errorElement) {
-            input.classList.remove('error');
-            input.classList.add('success');
-            errorElement.classList.add('hidden');
-        }
-
-        function clearValidation(input, errorElement) {
-            input.classList.remove('error', 'success');
-            errorElement.classList.add('hidden');
-        }
-
-        function hideAllRequiredIndicators() {
-            [nameRequired, contactRequired, phoneRequired, messageRequired].forEach(el => {
-                el.classList.add('hidden');
-            });
-        }
-
-        // Character counter for message
-        messageInput.addEventListener('input', () => {
-            const length = messageInput.value.length;
-            charCount.textContent = length;
-
-            if (length >= 256) {
-                charCounter.classList.add('char-limit');
-                charCounter.classList.remove('char-warning');
-            } else if (length >= 200) {
-                charCounter.classList.add('char-warning');
-                charCounter.classList.remove('char-limit');
-            } else {
-                charCounter.classList.remove('char-warning', 'char-limit');
-            }
-        });
-
-        // Real-time validation on blur
-        nameInput.addEventListener('blur', () => {
-            const nameError = document.getElementById('name-error');
-            if (nameInput.value.trim() !== '' && nameInput.value.trim().length < 2) {
-                showError(nameInput, nameError, 'Name must be at least 2 characters');
-            } else if (nameInput.value.trim().length >= 2) {
-                showSuccess(nameInput, nameError);
-            } else {
-                clearValidation(nameInput, nameError);
-            }
-        });
-
-        emailInput.addEventListener('blur', () => {
-            const emailError = document.getElementById('email-error');
-            if (emailInput.value.trim() !== '' && !emailPattern.test(emailInput.value.trim())) {
-                showError(emailInput, emailError, 'Please enter a valid email address (e.g., name@example.com)');
-            } else if (emailInput.value.trim() !== '' && emailPattern.test(emailInput.value.trim())) {
-                showSuccess(emailInput, emailError);
-            } else {
-                clearValidation(emailInput, emailError);
-            }
-        });
-
-        phoneInput.addEventListener('blur', () => {
-            const phoneError = document.getElementById('phone-error');
-            if (phoneInput.value.trim() !== '' && !phonePattern.test(phoneInput.value.trim())) {
-                showError(phoneInput, phoneError, 'Please enter a valid phone number (e.g., (555) 123-4567)');
-            } else if (phoneInput.value.trim() !== '' && phonePattern.test(phoneInput.value.trim())) {
-                showSuccess(phoneInput, phoneError);
-            } else {
-                clearValidation(phoneInput, phoneError);
-            }
-        });
-
-        messageInput.addEventListener('blur', () => {
-            const messageError = document.getElementById('message-error');
-            if (messageInput.value.trim() !== '' && messageInput.value.trim().length < 10) {
-                showError(messageInput, messageError, 'Message must be at least 10 characters');
-            } else if (messageInput.value.trim().length >= 10) {
-                showSuccess(messageInput, messageError);
-            } else {
-                clearValidation(messageInput, messageError);
-            }
-        });
-
-        // Clear errors on focus
-        [nameInput, emailInput, phoneInput, messageInput].forEach(input => {
-            input.addEventListener('focus', () => {
-                formErrorSummary.classList.add('hidden');
-            });
-        });
-
-        // Form submission
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            let errors = [];
-            formSuccess.classList.add('hidden');
-            hideAllRequiredIndicators();
-
-            // Validate name
-            const nameError = document.getElementById('name-error');
-            if (nameInput.value.trim() === '') {
-                showError(nameInput, nameError, 'Name is required');
-                nameRequired.classList.remove('hidden');
-                errors.push('Name is required');
-            } else if (nameInput.value.trim().length < 2) {
-                showError(nameInput, nameError, 'Name must be at least 2 characters');
-                errors.push('Name must be at least 2 characters');
-            } else {
-                showSuccess(nameInput, nameError);
-            }
-
-            // Validate contact (email OR phone required)
-            const emailError = document.getElementById('email-error');
-            const phoneError = document.getElementById('phone-error');
-            const hasEmail = emailInput.value.trim() !== '';
-            const hasPhone = phoneInput.value.trim() !== '';
-            let emailValid = true;
-            let phoneValid = true;
-
-            // Check email format if provided
-            if (hasEmail && !emailPattern.test(emailInput.value.trim())) {
-                showError(emailInput, emailError, 'Please enter a valid email address');
-                errors.push('Please enter a valid email address');
-                emailValid = false;
-            } else if (hasEmail) {
-                showSuccess(emailInput, emailError);
-            }
-
-            // Check phone format if provided
-            if (hasPhone && !phonePattern.test(phoneInput.value.trim())) {
-                showError(phoneInput, phoneError, 'Please enter a valid phone number');
-                errors.push('Please enter a valid phone number');
-                phoneValid = false;
-            } else if (hasPhone) {
-                showSuccess(phoneInput, phoneError);
-            }
-
-            // Require at least one contact method
-            if (!hasEmail && !hasPhone) {
-                showError(emailInput, emailError, 'Please provide an email or phone number');
-                showError(phoneInput, phoneError, 'Please provide an email or phone number');
-                contactRequired.classList.remove('hidden');
-                phoneRequired.classList.remove('hidden');
-                errors.push('Please provide an email or phone number');
-            }
-
-            // Validate message
-            const messageError = document.getElementById('message-error');
-            if (messageInput.value.trim() === '') {
-                showError(messageInput, messageError, 'Message is required');
-                messageRequired.classList.remove('hidden');
-                errors.push('Message is required');
-            } else if (messageInput.value.trim().length < 10) {
-                showError(messageInput, messageError, 'Message must be at least 10 characters');
-                errors.push('Message must be at least 10 characters');
-            } else {
-                showSuccess(messageInput, messageError);
-            }
-
-            // Show error summary or success
-            if (errors.length > 0) {
-                errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
-                formErrorSummary.classList.remove('hidden');
-                formErrorSummary.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-                // Form is valid - submit to server
-                const formData = new FormData(contactForm);
-                const submitBtn = document.getElementById('submit-btn');
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Sending...';
-
-                fetch('/contact', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        formErrorSummary.classList.add('hidden');
-                        formSuccess.classList.remove('hidden');
-                        contactForm.reset();
-                        charCount.textContent = '0';
-                        charCounter.classList.remove('char-warning', 'char-limit');
-                        hideAllRequiredIndicators();
-
-                        // Clear all success states
-                        [nameInput, emailInput, phoneInput, messageInput].forEach(input => {
-                            input.classList.remove('success');
-                        });
-
-                        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } else {
-                        errorList.innerHTML = `<li>${data.error}</li>`;
-                        formErrorSummary.classList.remove('hidden');
-                        formErrorSummary.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                })
-                .catch(err => {
-                    errorList.innerHTML = '<li>Failed to send message. Please try again.</li>';
-                    formErrorSummary.classList.remove('hidden');
-                    formErrorSummary.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                })
-                .finally(() => {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Send Message';
-                });
-            }
-        });
     </script>
 </body>
 </html>
