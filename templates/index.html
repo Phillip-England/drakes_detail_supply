@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -21,15 +22,37 @@
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
+            transition: opacity 1s ease-out, transform 1s ease-out, background-color 0s, color 0s, border-color 0s, box-shadow 0s;
         }
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
         }
-        .fade-in-delay-1 { transition-delay: 0.15s; }
-        .fade-in-delay-2 { transition-delay: 0.3s; }
-        .fade-in-delay-3 { transition-delay: 0.45s; }
+        .fade-in-delay-1 { transition-delay: 0.15s, 0.15s, 0s, 0s, 0s, 0s; }
+        .fade-in-delay-2 { transition-delay: 0.3s, 0.3s, 0s, 0s, 0s, 0s; }
+        .fade-in-delay-3 { transition-delay: 0.45s, 0.45s, 0s, 0s, 0s, 0s; }
+
+        /* Form validation styles */
+        .form-input.error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2;
+        }
+        .dark .form-input.error {
+            border-color: #f87171 !important;
+            background-color: rgba(127, 29, 29, 0.2);
+        }
+        .form-input.success {
+            border-color: #22c55e !important;
+        }
+        .dark .form-input.success {
+            border-color: #4ade80 !important;
+        }
+        .char-warning {
+            color: #f59e0b !important;
+        }
+        .char-limit {
+            color: #ef4444 !important;
+        }
 
         /* Navigation styles */
         .nav-link {
@@ -58,6 +81,9 @@
             background: rgba(30, 58, 95, 0.95);
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .dark .navbar.scrolled {
+            background: rgba(17, 24, 39, 0.95);
         }
         .logo {
             background: linear-gradient(135deg, #ffffff, #c9a227);
@@ -172,17 +198,82 @@
         .close-btn:hover::after {
             background: #c9a227;
         }
+
+        /* Dark mode toggle */
+        .theme-toggle {
+            width: 56px;
+            height: 28px;
+            background: linear-gradient(135deg, #87CEEB, #FFD700);
+            border-radius: 50px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.4s ease;
+            border: none;
+            padding: 0;
+        }
+        .dark .theme-toggle {
+            background: linear-gradient(135deg, #1a1a2e, #4a4a6a);
+        }
+        .theme-toggle-circle {
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.4s ease, background 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark .theme-toggle-circle {
+            transform: translateX(28px);
+            background: #1a1a2e;
+        }
+        .theme-toggle-circle svg {
+            width: 14px;
+            height: 14px;
+            transition: opacity 0.3s ease;
+        }
+        .sun-icon { color: #FFD700; }
+        .moon-icon { color: #fff; opacity: 0; position: absolute; }
+        .dark .sun-icon { opacity: 0; }
+        .dark .moon-icon { opacity: 1; }
+
+        /* Instant theme color transitions */
+        .dark .fade-in,
+        .fade-in.dark {
+            transition: opacity 1s ease-out, transform 1s ease-out, background-color 0s, color 0s, border-color 0s, box-shadow 0s;
+        }
+        .dark .fade-in.visible,
+        .fade-in.dark.visible {
+            transition: opacity 1s ease-out, transform 1s ease-out, background-color 0s, color 0s, border-color 0s, box-shadow 0s;
+        }
+
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 dark:bg-gray-900">
     <!-- Navigation -->
     <nav id="navbar" class="navbar text-white py-5 fixed w-full top-0 z-50">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <a href="/" class="logo text-2xl font-bold tracking-wide">Drake's Detail Supply</a>
-            <ul class="hidden md:flex space-x-10">
+            <ul class="hidden md:flex space-x-10 items-center">
                 <li><a href="#home" class="nav-link text-white font-medium tracking-wide">Home</a></li>
                 <li><a href="#services" class="nav-link text-white font-medium tracking-wide">Services</a></li>
                 <li><a href="#contact" class="nav-link text-white font-medium tracking-wide">Contact</a></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                        <div class="theme-toggle-circle">
+                            <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                            </svg>
+                            <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                            </svg>
+                        </div>
+                    </button>
+                </li>
             </ul>
             <!-- Mobile menu button -->
             <button id="mobile-menu-btn" class="hamburger md:hidden" aria-label="Toggle menu">
@@ -200,6 +291,16 @@
             <a href="#home" class="mobile-nav-link mb-8">Home</a>
             <a href="#services" class="mobile-nav-link mb-8">Services</a>
             <a href="#contact" class="mobile-nav-link">Contact</a>
+            <button id="theme-toggle-mobile" class="theme-toggle mt-10" aria-label="Toggle dark mode">
+                <div class="theme-toggle-circle">
+                    <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                    </svg>
+                    <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                    </svg>
+                </div>
+            </button>
         </div>
     </div>
 
@@ -217,81 +318,129 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-20 bg-white">
+    <section id="services" class="py-20 bg-white dark:bg-gray-800">
         <div class="max-w-7xl mx-auto px-4">
-            <h2 class="fade-in text-4xl font-bold text-center text-primary mb-4">Our Services</h2>
-            <p class="fade-in text-gray-600 text-center mb-12 max-w-2xl mx-auto">We provide top-quality auto detailing supplies and expert advice to keep your vehicle looking its best.</p>
+            <h2 class="fade-in text-4xl font-bold text-center text-primary dark:text-white mb-4">Our Services</h2>
+            <p class="fade-in text-gray-600 dark:text-gray-300 text-center mb-12 max-w-2xl mx-auto">We provide top-quality auto detailing supplies and expert advice to keep your vehicle looking its best.</p>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Service 1 -->
-                <div class="fade-in fade-in-delay-1 bg-gray-50 rounded-lg p-8 text-center hover:shadow-lg transition">
-                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="fade-in fade-in-delay-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
+                    <div class="w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-primary mb-3">Premium Products</h3>
-                    <p class="text-gray-600">Professional-grade waxes, polishes, and coatings from the industry's top brands.</p>
+                    <h3 class="text-xl font-bold text-primary dark:text-white mb-3">Premium Products</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Professional-grade waxes, polishes, and coatings from the industry's top brands.</p>
                 </div>
 
                 <!-- Service 2 -->
-                <div class="fade-in fade-in-delay-2 bg-gray-50 rounded-lg p-8 text-center hover:shadow-lg transition">
-                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="fade-in fade-in-delay-2 bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
+                    <div class="w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-primary mb-3">Expert Advice</h3>
-                    <p class="text-gray-600">Years of detailing experience to help you choose the right products for your needs.</p>
+                    <h3 class="text-xl font-bold text-primary dark:text-white mb-3">Expert Advice</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Years of detailing experience to help you choose the right products for your needs.</p>
                 </div>
 
                 <!-- Service 3 -->
-                <div class="fade-in fade-in-delay-3 bg-gray-50 rounded-lg p-8 text-center hover:shadow-lg transition">
-                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="fade-in fade-in-delay-3 bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center hover:shadow-lg dark:hover:shadow-2xl transition-shadow">
+                    <div class="w-16 h-16 bg-primary dark:bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white dark:text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-bold text-primary mb-3">Local Service</h3>
-                    <p class="text-gray-600">Proudly serving Tulsa and the surrounding Oklahoma area with personalized service.</p>
+                    <h3 class="text-xl font-bold text-primary dark:text-white mb-3">Local Service</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Proudly serving Tulsa and the surrounding Oklahoma area with personalized service.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-100">
+    <section id="contact" class="py-20 bg-gray-100 dark:bg-gray-900">
         <div class="max-w-3xl mx-auto px-4">
-            <h2 class="fade-in text-4xl font-bold text-center text-primary mb-4">Contact Us</h2>
-            <p class="fade-in text-gray-600 text-center mb-12">Have questions? We'd love to hear from you. Send us a message!</p>
+            <h2 class="fade-in text-4xl font-bold text-center text-primary dark:text-white mb-4">Contact Us</h2>
+            <p class="fade-in text-gray-600 dark:text-gray-300 text-center mb-12">Have questions? We'd love to hear from you. Send us a message!</p>
 
-            <form class="fade-in bg-white rounded-lg shadow-lg p-8">
+            <form id="contact-form" class="fade-in bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8" novalidate>
+                <!-- Form Error Summary -->
+                <div id="form-error-summary" class="hidden bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
+                    <p class="font-medium">Please fix the following errors:</p>
+                    <ul id="error-list" class="list-disc list-inside mt-2 text-sm"></ul>
+                </div>
+
+                <!-- Success Message -->
+                <div id="form-success" class="hidden bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg mb-6">
+                    <p class="font-medium">Thank you for your message! We'll get back to you soon.</p>
+                </div>
+
                 <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <!-- Name Field -->
                     <div>
-                        <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
-                        <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Your name">
+                        <label for="name" class="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                            Name <span id="name-required" class="hidden text-red-500">*</span>
+                        </label>
+                        <input type="text" id="name" name="name"
+                            class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
+                            placeholder="Your name">
+                        <p id="name-error" class="hidden text-red-500 dark:text-red-400 text-sm mt-1"></p>
                     </div>
+
+                    <!-- Email Field -->
                     <div>
-                        <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-                        <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="your@email.com">
+                        <label for="email" class="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                            Email <span id="contact-required" class="hidden text-red-500">*</span>
+                        </label>
+                        <input type="email" id="email" name="email"
+                            class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
+                            placeholder="your@email.com">
+                        <p id="email-error" class="hidden text-red-500 dark:text-red-400 text-sm mt-1"></p>
                     </div>
                 </div>
+
+                <!-- Phone Field -->
                 <div class="mb-6">
-                    <label for="phone" class="block text-gray-700 font-medium mb-2">Phone</label>
-                    <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="(555) 123-4567">
+                    <label for="phone" class="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                        Phone <span id="phone-required" class="hidden text-red-500">*</span>
+                    </label>
+                    <input type="tel" id="phone" name="phone"
+                        class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
+                        placeholder="(555) 123-4567">
+                    <p id="phone-error" class="hidden text-red-500 dark:text-red-400 text-sm mt-1"></p>
+                    <p class="text-gray-500 dark:text-gray-400 text-sm mt-1">Provide either email or phone (or both)</p>
                 </div>
+
+                <!-- Message Field -->
                 <div class="mb-6">
-                    <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
-                    <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="How can we help you?"></textarea>
+                    <label for="message" class="block text-gray-700 dark:text-gray-200 font-medium mb-2">
+                        Message <span id="message-required" class="hidden text-red-500">*</span>
+                    </label>
+                    <textarea id="message" name="message" rows="5" maxlength="256"
+                        class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary dark:focus:ring-secondary"
+                        placeholder="How can we help you?"></textarea>
+                    <div class="flex justify-between items-center mt-1">
+                        <p id="message-error" class="hidden text-red-500 dark:text-red-400 text-sm"></p>
+                        <p id="char-counter" class="text-gray-500 dark:text-gray-400 text-sm ml-auto">
+                            <span id="char-count">0</span>/256 characters
+                        </p>
+                    </div>
                 </div>
-                <button type="submit" class="w-full bg-primary hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg transition">Send Message</button>
+
+                <button type="submit" id="submit-btn"
+                    class="w-full bg-primary hover:bg-blue-900 dark:bg-secondary dark:hover:bg-yellow-600 text-white dark:text-gray-900 font-bold py-3 px-6 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    Send Message
+                </button>
             </form>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-primary text-white py-8">
+    <footer class="bg-primary dark:bg-gray-950 text-white py-8">
         <div class="max-w-7xl mx-auto px-4 text-center">
             <p class="text-xl font-bold mb-2">Drake's Detail Supply</p>
             <p class="text-gray-300 mb-4">Tulsa, Oklahoma</p>
@@ -353,6 +502,260 @@
         // Close mobile menu when clicking a link
         mobileMenu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Dark mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to light
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+
+        // Contact Form Validation
+        const contactForm = document.getElementById('contact-form');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const messageInput = document.getElementById('message');
+        const charCount = document.getElementById('char-count');
+        const charCounter = document.getElementById('char-counter');
+        const formErrorSummary = document.getElementById('form-error-summary');
+        const errorList = document.getElementById('error-list');
+        const formSuccess = document.getElementById('form-success');
+
+        // Required indicators (hidden by default)
+        const nameRequired = document.getElementById('name-required');
+        const contactRequired = document.getElementById('contact-required');
+        const phoneRequired = document.getElementById('phone-required');
+        const messageRequired = document.getElementById('message-required');
+
+        // Validation patterns
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phonePattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+
+        // Helper functions
+        function showError(input, errorElement, message) {
+            input.classList.add('error');
+            input.classList.remove('success');
+            errorElement.textContent = message;
+            errorElement.classList.remove('hidden');
+        }
+
+        function showSuccess(input, errorElement) {
+            input.classList.remove('error');
+            input.classList.add('success');
+            errorElement.classList.add('hidden');
+        }
+
+        function clearValidation(input, errorElement) {
+            input.classList.remove('error', 'success');
+            errorElement.classList.add('hidden');
+        }
+
+        function hideAllRequiredIndicators() {
+            [nameRequired, contactRequired, phoneRequired, messageRequired].forEach(el => {
+                el.classList.add('hidden');
+            });
+        }
+
+        // Character counter for message
+        messageInput.addEventListener('input', () => {
+            const length = messageInput.value.length;
+            charCount.textContent = length;
+
+            if (length >= 256) {
+                charCounter.classList.add('char-limit');
+                charCounter.classList.remove('char-warning');
+            } else if (length >= 200) {
+                charCounter.classList.add('char-warning');
+                charCounter.classList.remove('char-limit');
+            } else {
+                charCounter.classList.remove('char-warning', 'char-limit');
+            }
+        });
+
+        // Real-time validation on blur
+        nameInput.addEventListener('blur', () => {
+            const nameError = document.getElementById('name-error');
+            if (nameInput.value.trim() !== '' && nameInput.value.trim().length < 2) {
+                showError(nameInput, nameError, 'Name must be at least 2 characters');
+            } else if (nameInput.value.trim().length >= 2) {
+                showSuccess(nameInput, nameError);
+            } else {
+                clearValidation(nameInput, nameError);
+            }
+        });
+
+        emailInput.addEventListener('blur', () => {
+            const emailError = document.getElementById('email-error');
+            if (emailInput.value.trim() !== '' && !emailPattern.test(emailInput.value.trim())) {
+                showError(emailInput, emailError, 'Please enter a valid email address (e.g., name@example.com)');
+            } else if (emailInput.value.trim() !== '' && emailPattern.test(emailInput.value.trim())) {
+                showSuccess(emailInput, emailError);
+            } else {
+                clearValidation(emailInput, emailError);
+            }
+        });
+
+        phoneInput.addEventListener('blur', () => {
+            const phoneError = document.getElementById('phone-error');
+            if (phoneInput.value.trim() !== '' && !phonePattern.test(phoneInput.value.trim())) {
+                showError(phoneInput, phoneError, 'Please enter a valid phone number (e.g., (555) 123-4567)');
+            } else if (phoneInput.value.trim() !== '' && phonePattern.test(phoneInput.value.trim())) {
+                showSuccess(phoneInput, phoneError);
+            } else {
+                clearValidation(phoneInput, phoneError);
+            }
+        });
+
+        messageInput.addEventListener('blur', () => {
+            const messageError = document.getElementById('message-error');
+            if (messageInput.value.trim() !== '' && messageInput.value.trim().length < 10) {
+                showError(messageInput, messageError, 'Message must be at least 10 characters');
+            } else if (messageInput.value.trim().length >= 10) {
+                showSuccess(messageInput, messageError);
+            } else {
+                clearValidation(messageInput, messageError);
+            }
+        });
+
+        // Clear errors on focus
+        [nameInput, emailInput, phoneInput, messageInput].forEach(input => {
+            input.addEventListener('focus', () => {
+                formErrorSummary.classList.add('hidden');
+            });
+        });
+
+        // Form submission
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let errors = [];
+            formSuccess.classList.add('hidden');
+            hideAllRequiredIndicators();
+
+            // Validate name
+            const nameError = document.getElementById('name-error');
+            if (nameInput.value.trim() === '') {
+                showError(nameInput, nameError, 'Name is required');
+                nameRequired.classList.remove('hidden');
+                errors.push('Name is required');
+            } else if (nameInput.value.trim().length < 2) {
+                showError(nameInput, nameError, 'Name must be at least 2 characters');
+                errors.push('Name must be at least 2 characters');
+            } else {
+                showSuccess(nameInput, nameError);
+            }
+
+            // Validate contact (email OR phone required)
+            const emailError = document.getElementById('email-error');
+            const phoneError = document.getElementById('phone-error');
+            const hasEmail = emailInput.value.trim() !== '';
+            const hasPhone = phoneInput.value.trim() !== '';
+            let emailValid = true;
+            let phoneValid = true;
+
+            // Check email format if provided
+            if (hasEmail && !emailPattern.test(emailInput.value.trim())) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+                errors.push('Please enter a valid email address');
+                emailValid = false;
+            } else if (hasEmail) {
+                showSuccess(emailInput, emailError);
+            }
+
+            // Check phone format if provided
+            if (hasPhone && !phonePattern.test(phoneInput.value.trim())) {
+                showError(phoneInput, phoneError, 'Please enter a valid phone number');
+                errors.push('Please enter a valid phone number');
+                phoneValid = false;
+            } else if (hasPhone) {
+                showSuccess(phoneInput, phoneError);
+            }
+
+            // Require at least one contact method
+            if (!hasEmail && !hasPhone) {
+                showError(emailInput, emailError, 'Please provide an email or phone number');
+                showError(phoneInput, phoneError, 'Please provide an email or phone number');
+                contactRequired.classList.remove('hidden');
+                phoneRequired.classList.remove('hidden');
+                errors.push('Please provide an email or phone number');
+            }
+
+            // Validate message
+            const messageError = document.getElementById('message-error');
+            if (messageInput.value.trim() === '') {
+                showError(messageInput, messageError, 'Message is required');
+                messageRequired.classList.remove('hidden');
+                errors.push('Message is required');
+            } else if (messageInput.value.trim().length < 10) {
+                showError(messageInput, messageError, 'Message must be at least 10 characters');
+                errors.push('Message must be at least 10 characters');
+            } else {
+                showSuccess(messageInput, messageError);
+            }
+
+            // Show error summary or success
+            if (errors.length > 0) {
+                errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
+                formErrorSummary.classList.remove('hidden');
+                formErrorSummary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                // Form is valid - submit to server
+                const formData = new FormData(contactForm);
+                const submitBtn = document.getElementById('submit-btn');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Sending...';
+
+                fetch('/contact', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        formErrorSummary.classList.add('hidden');
+                        formSuccess.classList.remove('hidden');
+                        contactForm.reset();
+                        charCount.textContent = '0';
+                        charCounter.classList.remove('char-warning', 'char-limit');
+                        hideAllRequiredIndicators();
+
+                        // Clear all success states
+                        [nameInput, emailInput, phoneInput, messageInput].forEach(input => {
+                            input.classList.remove('success');
+                        });
+
+                        formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        errorList.innerHTML = `<li>${data.error}</li>`;
+                        formErrorSummary.classList.remove('hidden');
+                        formErrorSummary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                })
+                .catch(err => {
+                    errorList.innerHTML = '<li>Failed to send message. Please try again.</li>';
+                    formErrorSummary.classList.remove('hidden');
+                    formErrorSummary.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Send Message';
+                });
+            }
         });
     </script>
 </body>

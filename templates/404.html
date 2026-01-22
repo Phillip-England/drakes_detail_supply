@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found | Drake's Detail Supply</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a5f',
+                        secondary: '#c9a227',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .logo {
+            background: linear-gradient(135deg, #1e3a5f, #c9a227);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .dark .logo {
+            background: linear-gradient(135deg, #ffffff, #c9a227);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .error-code {
+            font-size: 10rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, #1e3a5f, #c9a227);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        @media (max-width: 640px) {
+            .error-code {
+                font-size: 6rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-primary dark:bg-gray-800 text-white py-4">
+        <div class="max-w-7xl mx-auto px-6">
+            <a href="/" class="logo text-2xl font-bold tracking-wide">Drake's Detail Supply</a>
+        </div>
+    </nav>
+
+    <!-- 404 Content -->
+    <div class="flex-1 flex items-center justify-center px-4">
+        <div class="text-center">
+            <div class="error-code mb-4">404</div>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 dark:text-white mb-4">Page Not Found</h1>
+            <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+                Looks like this page took a wrong turn. The page you're looking for doesn't exist or has been moved.
+            </p>
+            <a href="/" class="inline-block bg-primary hover:bg-blue-900 dark:bg-secondary dark:hover:bg-yellow-600 text-white dark:text-gray-900 font-bold py-3 px-8 rounded-lg transition">
+                Back to Home
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-primary dark:bg-gray-950 text-white py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-400 text-sm">&copy; 2025 Drake's Detail Supply. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</body>
+</html>
