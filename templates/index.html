@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drake's Detail Supply | Tulsa, Oklahoma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1e3a5f',
+                        secondary: '#c9a227',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-in-delay-1 { transition-delay: 0.15s; }
+        .fade-in-delay-2 { transition-delay: 0.3s; }
+        .fade-in-delay-3 { transition-delay: 0.45s; }
+
+        /* Navigation styles */
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #c9a227, #f0d060);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .navbar {
+            background: transparent;
+            backdrop-filter: blur(0px);
+            transition: all 0.4s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(30, 58, 95, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .logo {
+            background: linear-gradient(135deg, #ffffff, #c9a227);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #1e3a5f 0%, #0f1f33 100%);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-menu-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .mobile-nav-link {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s ease;
+        }
+        .mobile-menu-overlay.active .mobile-nav-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .mobile-nav-link:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-nav-link:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-nav-link:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-nav-link:hover {
+            color: #c9a227;
+        }
+
+        /* Hamburger animation */
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            z-index: 150;
+        }
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        .hamburger span:nth-child(1) { top: 0; }
+        .hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+        .hamburger span:nth-child(3) { bottom: 0; }
+        .hamburger.active span:nth-child(1) {
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        .hamburger.active span:nth-child(3) {
+            bottom: 50%;
+            transform: translateY(50%) rotate(-45deg);
+        }
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0;
+            transform: rotate(-90deg);
+            transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s;
+        }
+        .mobile-menu-overlay.active .close-btn {
+            opacity: 1;
+            transform: rotate(0deg);
+        }
+        .close-btn::before,
+        .close-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+        }
+        .close-btn::before { transform: translate(-50%, -50%) rotate(45deg); }
+        .close-btn::after { transform: translate(-50%, -50%) rotate(-45deg); }
+        .close-btn:hover::before,
+        .close-btn:hover::after {
+            background: #c9a227;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav id="navbar" class="navbar text-white py-5 fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="/" class="logo text-2xl font-bold tracking-wide">Drake's Detail Supply</a>
+            <ul class="hidden md:flex space-x-10">
+                <li><a href="#home" class="nav-link text-white font-medium tracking-wide">Home</a></li>
+                <li><a href="#services" class="nav-link text-white font-medium tracking-wide">Services</a></li>
+                <li><a href="#contact" class="nav-link text-white font-medium tracking-wide">Contact</a></li>
+            </ul>
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="hamburger md:hidden" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Full screen mobile menu -->
+    <div id="mobile-menu" class="mobile-menu-overlay md:hidden">
+        <div id="close-menu" class="close-btn"></div>
+        <div class="mobile-menu-content">
+            <a href="#home" class="mobile-nav-link mb-8">Home</a>
+            <a href="#services" class="mobile-nav-link mb-8">Services</a>
+            <a href="#contact" class="mobile-nav-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center">
+        <div class="absolute inset-0">
+            <img src="/static/hero.webp" alt="Auto Detailing" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+        <div class="relative z-10 text-center text-white px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">Drake's Detail Supply</h1>
+            <p class="text-xl md:text-2xl mb-8">Premium Auto Detailing Products in Tulsa, Oklahoma</p>
+            <a href="#contact" class="bg-secondary hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition">Get In Touch</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="fade-in text-4xl font-bold text-center text-primary mb-4">Our Services</h2>
+            <p class="fade-in text-gray-600 text-center mb-12 max-w-2xl mx-auto">We provide top-quality auto detailing supplies and expert advice to keep your vehicle looking its best.</p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="fade-in fade-in-delay-1 bg-gray-50 rounded-lg p-8 text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Premium Products</h3>
+                    <p class="text-gray-600">Professional-grade waxes, polishes, and coatings from the industry's top brands.</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="fade-in fade-in-delay-2 bg-gray-50 rounded-lg p-8 text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Expert Advice</h3>
+                    <p class="text-gray-600">Years of detailing experience to help you choose the right products for your needs.</p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="fade-in fade-in-delay-3 bg-gray-50 rounded-lg p-8 text-center hover:shadow-lg transition">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Local Service</h3>
+                    <p class="text-gray-600">Proudly serving Tulsa and the surrounding Oklahoma area with personalized service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-100">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="fade-in text-4xl font-bold text-center text-primary mb-4">Contact Us</h2>
+            <p class="fade-in text-gray-600 text-center mb-12">Have questions? We'd love to hear from you. Send us a message!</p>
+
+            <form class="fade-in bg-white rounded-lg shadow-lg p-8">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label for="name" class="block text-gray-700 font-medium mb-2">Name</label>
+                        <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Your name">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="your@email.com">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="phone" class="block text-gray-700 font-medium mb-2">Phone</label>
+                    <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="(555) 123-4567">
+                </div>
+                <div class="mb-6">
+                    <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
+                    <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" placeholder="How can we help you?"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg transition">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-xl font-bold mb-2">Drake's Detail Supply</p>
+            <p class="text-gray-300 mb-4">Tulsa, Oklahoma</p>
+            <p class="text-gray-400 text-sm">&copy; 2025 Drake's Detail Supply. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMenuBtn = document.getElementById('close-menu');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('active');
+            mobileMenuBtn.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuBtn.addEventListener('click', () => {
+            if (mobileMenu.classList.contains('active')) {
+                closeMobileMenu();
+            } else {
+                openMobileMenu();
+            }
+        });
+
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking a link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+    </script>
+</body>
+</html>
