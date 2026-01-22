@@ -334,12 +334,24 @@
                     </button>
                 </li>
             </ul>
-            <!-- Mobile menu button -->
-            <button id="mobile-menu-btn" class="hamburger md:hidden" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <!-- Mobile controls -->
+            <div class="md:hidden flex items-center gap-4">
+                <button id="theme-toggle-mobile" class="theme-toggle" aria-label="Toggle dark mode">
+                    <div class="theme-toggle-circle">
+                        <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </div>
+                </button>
+                <button id="mobile-menu-btn" class="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -350,16 +362,6 @@
             <a href="#home" class="mobile-nav-link mb-8">Home</a>
             <a href="#services" class="mobile-nav-link mb-8">Services</a>
             <a href="#contact" class="mobile-nav-link">Contact</a>
-            <button id="theme-toggle-mobile" class="theme-toggle mt-10" aria-label="Toggle dark mode">
-                <div class="theme-toggle-circle">
-                    <svg class="sun-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
-                    </svg>
-                    <svg class="moon-icon" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                    </svg>
-                </div>
-            </button>
         </div>
     </div>
 
@@ -427,14 +429,19 @@
             <p class="fade-in text-gray-600 dark:text-gray-300 text-center mb-12">Message us on Facebook for questions, product availability, or local pickup details.</p>
 
             <div class="fade-in hover-lift bg-white dark:bg-gray-800 rounded-lg shadow-lg p-10 text-center">
-                <div class="float-soft w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md">
+                <a href="https://www.facebook.com/profile.php?id=61582551050589"
+                    class="float-soft w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-md hover:shadow-lg transition"
+                    target="_blank" rel="noopener noreferrer" aria-label="Visit Drake's Detail Supply on Facebook">
                     <svg class="w-10 h-10 text-white" viewBox="0 0 24 24" aria-hidden="true">
                         <path fill="currentColor" d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.2 10.44 22v-7.03H7.9v-2.91h2.54V9.84c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.77l-.44 2.91h-2.33V22C18.34 21.2 22 17.08 22 12.06z"></path>
                     </svg>
-                </div>
+                </a>
                 <p class="text-gray-600 dark:text-gray-300 mb-2">We respond quickly on Facebook during business hours.</p>
                 <p class="text-gray-600 dark:text-gray-300 mb-6">
                     Email: <a href="mailto:lukedrake.dds@gmail.com" class="text-primary dark:text-secondary font-semibold hover:underline">lukedrake.dds@gmail.com</a>
+                </p>
+                <p class="text-gray-600 dark:text-gray-300 mb-6">
+                    5430 S 99th E Ave, Tulsa, OK 74145
                 </p>
                 <a href="https://www.facebook.com/profile.php?id=61582551050589"
                     class="inline-flex items-center justify-center bg-primary hover:bg-blue-900 dark:bg-secondary dark:hover:bg-yellow-600 text-white dark:text-gray-900 font-bold py-3 px-8 rounded-lg transition"
